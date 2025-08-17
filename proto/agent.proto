@@ -1,0 +1,63 @@
+syntax = "proto3";
+
+package monitoring.agent;
+
+option go_package = "proto/agent";
+
+message MetricsData {
+  string host_id = 1;
+  int64 timestamp = 2;
+  double cpu_usage = 3;     
+  double memory_usage = 4;   
+  double disk_usage = 5;     
+  double network_in = 6;     
+  double network_out = 7;    
+  int64 uptime = 8;          
+}
+
+message AgentStatus {
+  string host_id = 1;
+  bool is_healthy = 2;
+  string version = 3;
+  int64 last_heartbeat = 4;
+  string error_message = 5;
+}
+
+message AgentConfig {
+  string host_id = 1;
+  int32 metrics_interval = 2;
+  repeated string enabled_metrics = 3;
+  string collector_endpoint = 4;
+}
+
+service AgentService {
+  rpc ReportMetrics(stream MetricsData) returns (ReportMetricsResponse);
+  
+  rpc GetAgentStatus(GetAgentStatusRequest) returns (GetAgentStatusResponse);
+  
+  rpc UpdateConfig(UpdateConfigRequest) returns (UpdateConfigResponse);
+}
+
+message ReportMetricsResponse {
+  bool success = 1;
+  string message = 2;
+}
+
+message GetAgentStatusRequest {
+  string host_id = 1;
+}
+
+message GetAgentStatusResponse {
+  AgentStatus status = 1;
+  bool success = 2;
+  string message = 3;
+}
+
+message UpdateConfigRequest {
+  AgentConfig config = 1;
+}
+
+message UpdateConfigResponse {
+  bool success = 1;
+  string message = 2;
+}
