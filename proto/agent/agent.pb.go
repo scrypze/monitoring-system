@@ -21,17 +21,16 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-// Сообщение с метриками системы
 type MetricsData struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	HostId        string                 `protobuf:"bytes,1,opt,name=host_id,json=hostId,proto3" json:"host_id,omitempty"`
 	Timestamp     int64                  `protobuf:"varint,2,opt,name=timestamp,proto3" json:"timestamp,omitempty"`
-	CpuUsage      float64                `protobuf:"fixed64,3,opt,name=cpu_usage,json=cpuUsage,proto3" json:"cpu_usage,omitempty"`          // в процентах
-	MemoryUsage   float64                `protobuf:"fixed64,4,opt,name=memory_usage,json=memoryUsage,proto3" json:"memory_usage,omitempty"` // в процентах
-	DiskUsage     float64                `protobuf:"fixed64,5,opt,name=disk_usage,json=diskUsage,proto3" json:"disk_usage,omitempty"`       // в процентах
-	NetworkIn     float64                `protobuf:"fixed64,6,opt,name=network_in,json=networkIn,proto3" json:"network_in,omitempty"`       // байт/сек
-	NetworkOut    float64                `protobuf:"fixed64,7,opt,name=network_out,json=networkOut,proto3" json:"network_out,omitempty"`    // байт/сек
-	Uptime        int64                  `protobuf:"varint,8,opt,name=uptime,proto3" json:"uptime,omitempty"`                               // время работы в секундах
+	CpuUsage      float64                `protobuf:"fixed64,3,opt,name=cpu_usage,json=cpuUsage,proto3" json:"cpu_usage,omitempty"`
+	MemoryUsage   float64                `protobuf:"fixed64,4,opt,name=memory_usage,json=memoryUsage,proto3" json:"memory_usage,omitempty"`
+	DiskUsage     float64                `protobuf:"fixed64,5,opt,name=disk_usage,json=diskUsage,proto3" json:"disk_usage,omitempty"`
+	NetworkIn     float64                `protobuf:"fixed64,6,opt,name=network_in,json=networkIn,proto3" json:"network_in,omitempty"`
+	NetworkOut    float64                `protobuf:"fixed64,7,opt,name=network_out,json=networkOut,proto3" json:"network_out,omitempty"`
+	Uptime        int64                  `protobuf:"varint,8,opt,name=uptime,proto3" json:"uptime,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -122,7 +121,6 @@ func (x *MetricsData) GetUptime() int64 {
 	return 0
 }
 
-// Статус агента
 type AgentStatus struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	HostId        string                 `protobuf:"bytes,1,opt,name=host_id,json=hostId,proto3" json:"host_id,omitempty"`
@@ -199,13 +197,12 @@ func (x *AgentStatus) GetErrorMessage() string {
 	return ""
 }
 
-// Конфигурация агента
 type AgentConfig struct {
 	state             protoimpl.MessageState `protogen:"open.v1"`
 	HostId            string                 `protobuf:"bytes,1,opt,name=host_id,json=hostId,proto3" json:"host_id,omitempty"`
-	MetricsInterval   int32                  `protobuf:"varint,2,opt,name=metrics_interval,json=metricsInterval,proto3" json:"metrics_interval,omitempty"`      // интервал сбора в секундах
-	EnabledMetrics    []string               `protobuf:"bytes,3,rep,name=enabled_metrics,json=enabledMetrics,proto3" json:"enabled_metrics,omitempty"`          // список собираемых метрик
-	CollectorEndpoint string                 `protobuf:"bytes,4,opt,name=collector_endpoint,json=collectorEndpoint,proto3" json:"collector_endpoint,omitempty"` // адрес collector сервиса
+	MetricsInterval   int32                  `protobuf:"varint,2,opt,name=metrics_interval,json=metricsInterval,proto3" json:"metrics_interval,omitempty"`
+	EnabledMetrics    []string               `protobuf:"bytes,3,rep,name=enabled_metrics,json=enabledMetrics,proto3" json:"enabled_metrics,omitempty"`
+	CollectorEndpoint string                 `protobuf:"bytes,4,opt,name=collector_endpoint,json=collectorEndpoint,proto3" json:"collector_endpoint,omitempty"`
 	unknownFields     protoimpl.UnknownFields
 	sizeCache         protoimpl.SizeCache
 }
@@ -268,7 +265,6 @@ func (x *AgentConfig) GetCollectorEndpoint() string {
 	return ""
 }
 
-// Request/Response сообщения для ReportMetrics
 type ReportMetricsResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty"`
@@ -321,7 +317,6 @@ func (x *ReportMetricsResponse) GetMessage() string {
 	return ""
 }
 
-// Request/Response сообщения для GetAgentStatus
 type GetAgentStatusRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	HostId        string                 `protobuf:"bytes,1,opt,name=host_id,json=hostId,proto3" json:"host_id,omitempty"`
@@ -426,7 +421,6 @@ func (x *GetAgentStatusResponse) GetMessage() string {
 	return ""
 }
 
-// Request/Response сообщения для UpdateConfig
 type UpdateConfigRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Config        *AgentConfig           `protobuf:"bytes,1,opt,name=config,proto3" json:"config,omitempty"`

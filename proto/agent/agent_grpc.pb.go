@@ -27,14 +27,9 @@ const (
 // AgentServiceClient is the client API for AgentService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-//
-// Сервис агента
 type AgentServiceClient interface {
-	// Потоковая передача метрик
 	ReportMetrics(ctx context.Context, opts ...grpc.CallOption) (grpc.ClientStreamingClient[MetricsData, ReportMetricsResponse], error)
-	// Получение статуса агента
 	GetAgentStatus(ctx context.Context, in *GetAgentStatusRequest, opts ...grpc.CallOption) (*GetAgentStatusResponse, error)
-	// Обновление конфигурации
 	UpdateConfig(ctx context.Context, in *UpdateConfigRequest, opts ...grpc.CallOption) (*UpdateConfigResponse, error)
 }
 
@@ -82,14 +77,9 @@ func (c *agentServiceClient) UpdateConfig(ctx context.Context, in *UpdateConfigR
 // AgentServiceServer is the server API for AgentService service.
 // All implementations must embed UnimplementedAgentServiceServer
 // for forward compatibility.
-//
-// Сервис агента
 type AgentServiceServer interface {
-	// Потоковая передача метрик
 	ReportMetrics(grpc.ClientStreamingServer[MetricsData, ReportMetricsResponse]) error
-	// Получение статуса агента
 	GetAgentStatus(context.Context, *GetAgentStatusRequest) (*GetAgentStatusResponse, error)
-	// Обновление конфигурации
 	UpdateConfig(context.Context, *UpdateConfigRequest) (*UpdateConfigResponse, error)
 	mustEmbedUnimplementedAgentServiceServer()
 }

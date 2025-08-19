@@ -13,14 +13,12 @@ import (
 )
 
 type MetricsCollector struct {
-	hostID string
 	logger *slog.Logger
 	config *Config
 }
 
-func NewMetricsCollector(hostID string, logger *slog.Logger, config *Config) *MetricsCollector {
+func NewMetricsCollector(logger *slog.Logger, config *Config) *MetricsCollector {
 	return &MetricsCollector{
-		hostID: hostID,
 		logger: logger,
 		config: config,
 	}
@@ -30,7 +28,7 @@ func (mc *MetricsCollector) Collect() (*agent.MetricsData, error) {
 	now := time.Now().Unix()
 
 	metrics := &agent.MetricsData{
-		HostId:    mc.hostID,
+		HostId:    mc.config.HostID,
 		Timestamp: now,
 	}
 

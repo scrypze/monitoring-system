@@ -17,12 +17,12 @@ func main() {
 	err := configManager.LoadConfig()
 
 	if err != nil {
-		log.Fatal("Failed load config")
+		log.Fatal("Failed load config: ", err)
 	}
 	
 	config := configManager.GetConfig()
 	
-	collector := agent.NewMetricsCollector(config.HostID, logger, config)
+	collector := agent.NewMetricsCollector(logger, config)
 	
 	logger.Info("starting metrics collection", 
 		"host_id", config.HostID,
